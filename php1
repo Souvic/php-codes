@@ -1,0 +1,56 @@
+<?php 
+echo "loved";
+  $pd = trim($_POST["product"]);
+  $price = trim($_POST["price"]);
+  $date = trim($_POST["date"]);
+  
+$servername = "localhost";
+$username = "id304760_chaksouv";
+$password = "batu2626";
+$dbname = "id304760_chaksouv1";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+// sql to create table
+$sql = "CREATE TABLE Mypd (
+pd VARCHAR(100) NOT NULL, 
+price INT(30) NOT NULL,
+date VARCHAR(30)
+)";
+echo "love1";
+if ($conn->query($sql) === TRUE) {
+   // echo "Table MyGuests created successfully";
+} else {
+
+if($conn->query(
+"ISNULL(
+SELECT price FROM (Mypd)
+GROUP BY 
+HAVING  (pd="./$pd/")&(date="./$date/"))"
+)==TRUE){
+
+
+
+
+echo "love";
+$sql = "INSERT INTO Mypd (pd, price, date)
+VALUES ($pd, $price, $date)";
+if ($conn->query($sql) === TRUE) {
+    //echo "Table MyGuests updated successfully";
+} 
+
+
+
+    //echo "Error creating table: " . $conn->error;
+}}
+
+$conn->close();
+
+
+
+?>
